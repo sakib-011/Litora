@@ -1,0 +1,81 @@
+/* =========================================================
+   admin.css — admin page layouts. Colors come from style.css variables.
+   Phase 6: page header, Add Book form layout, form alert.
+   (If you already have an admin.css, append this to it.)
+   ========================================================= */
+
+.admin-main { max-width: 1180px; }
+.page-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.page-head h1 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+
+.book-form-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+.form-card { padding: 1.5rem; display: grid; gap: 1.1rem; }
+.form-card > h2 { font-size: 1.25rem; }
+.form-side { display: grid; gap: 1.25rem; }
+.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.req { color: var(--accent); }
+
+select.input { appearance: none; padding-right: 2.2rem; cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--text-secondary) 50%), linear-gradient(135deg, var(--text-secondary) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; }
+select.input option { background: var(--bg-elevated); color: var(--text-primary); }
+textarea.input { resize: vertical; min-height: 130px; }
+.input[aria-invalid="true"] { border-color: var(--danger); }
+
+.form-alert { padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid var(--danger); background: rgba(255, 111, 111, 0.1); color: var(--danger); font-size: 0.9rem; }
+.form-actions { display: flex; justify-content: flex-end; gap: 0.6rem; margin-top: 1.25rem; flex-wrap: wrap; }
+
+@media (max-width: 960px) {
+    .book-form-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+    .form-row-2 { grid-template-columns: 1fr; }
+    .form-card { padding: 1.1rem; }
+    .form-actions .btn { flex: 1; }
+}
+
+/* ---------- Dashboard ---------- */
+.dash-block { margin-top: 2.25rem; }
+.dash-block > h2 { font-size: 1.3rem; margin-bottom: 1rem; }
+.stat .muted { font-size: 0.85rem; }
+
+/* ---------- Users / avatars ---------- */
+.avatar { display: inline-grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0; border-radius: 50%; font-weight: 600; font-size: 0.9rem; background: linear-gradient(135deg, var(--accent-2), #3a3f9e); color: #fff; }
+.user-cell { display: flex; align-items: center; gap: 0.75rem; }
+.user-list { list-style: none; margin: 0; padding: 0; display: grid; }
+.user-item { display: flex; align-items: center; gap: 0.9rem; padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); }
+.user-item:last-child { border-bottom: 0; }
+.user-text { display: grid; min-width: 0; flex: 1; }
+.user-text .muted { font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; }
+.user-date { font-size: 0.82rem; white-space: nowrap; }
+.role-pill { display: inline-block; padding: 0.1rem 0.65rem; border-radius: 999px; font-size: 0.78rem; border: 1px solid var(--border); text-transform: capitalize; }
+.role-pill.admin { color: var(--accent); border-color: rgba(232, 176, 75, 0.4); }
+.role-pill.user { color: var(--text-secondary); }
+#latestUsers { border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--glass); }
+
+/* ---------- Categories ---------- */
+.cat-layout { display: grid; grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+
+/* ---------- Edit book: current PDF ---------- */
+.current-file { display: flex; align-items: center; gap: 0.9rem; padding: 0.8rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-md); background: rgba(0, 0, 0, 0.2); }
+.current-file > .icon { color: var(--accent); width: 24px; height: 24px; }
+.current-file-text { display: grid; min-width: 0; flex: 1; font-size: 0.9rem; }
+.current-file-text strong { overflow-wrap: anywhere; }
+.replace-hint { font-size: 0.85rem; }
+
+/* ---------- Settings ---------- */
+.settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; align-items: start; }
+.kv { margin: 0; display: grid; }
+.kv-row { display: flex; justify-content: space-between; gap: 1rem; padding: 0.65rem 0; border-bottom: 1px solid var(--border); }
+.kv-row:last-child { border-bottom: 0; }
+.kv-row dt { color: var(--text-secondary); }
+.kv-row dd { margin: 0; font-weight: 500; text-align: right; overflow-wrap: anywhere; }
+.kv-bad { color: var(--danger); }
+.input[readonly] { opacity: 0.65; cursor: not-allowed; }
+
+@media (max-width: 960px) {
+    .cat-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+    .user-date { display: none; }
+}

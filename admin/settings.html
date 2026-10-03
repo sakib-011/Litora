@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Settings · Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="guarded">
+
+    <div id="siteNav"></div>
+
+    <div class="admin-shell">
+        <aside class="sidebar" id="adminSidebar" aria-label="Admin navigation"></aside>
+
+        <main class="admin-main">
+            <div class="page-head">
+                <div>
+                    <h1>Settings</h1>
+                    <p class="muted">Your account and the services this site is connected to.</p>
+                </div>
+            </div>
+
+            <div class="settings-grid">
+                <section class="glass form-card" aria-labelledby="accountHeading">
+                    <h2 id="accountHeading">Account</h2>
+                    <form id="profileForm" novalidate style="display:grid;gap:1.1rem">
+                        <div class="field">
+                            <label for="setName">Full name</label>
+                            <input class="input" id="setName" type="text" maxlength="100" autocomplete="name" placeholder="Enter your full name">
+                            <span class="field-error" id="setNameError" role="alert"></span>
+                        </div>
+                        <div class="field">
+                            <label for="setEmail">Email</label>
+                            <input class="input" id="setEmail" type="email" readonly>
+                        </div>
+                        <div class="field">
+                            <label for="setRole">Role</label>
+                            <input class="input" id="setRole" type="text" readonly>
+                        </div>
+                        <div class="form-actions" style="margin-top:0">
+                            <button class="btn btn-primary" id="setSave" type="submit"><i class="fa-solid fa-floppy-disk icon"></i>Save profile</button>
+                        </div>
+                    </form>
+                </section>
+
+                <div class="form-side">
+                    <section class="glass form-card" aria-labelledby="connHeading">
+                        <h2 id="connHeading">Connections</h2>
+                        <dl class="kv" id="connectionStatus"></dl>
+                        <p class="muted replace-hint">These values come from <code>js/config.js</code>. Only public keys belong there, never secrets.</p>
+                    </section>
+
+                    <section class="glass form-card" aria-labelledby="sessionHeading">
+                        <h2 id="sessionHeading">Session</h2>
+                        <div><button class="btn" id="setLogout" type="button"><i class="fa-solid fa-right-from-bracket icon"></i>Log out</button></div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cloudinary.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        (async () => {
+            UI.renderNavbar("");
+            Admin.initShell("settings");
+            UI.initSidebar();
+            await Auth.initNav();
+            UI.refreshIcons();
+
+            const profile = await Auth.requireAdmin();
+            if (profile) Admin.initSettingsPage(profile);
+        })();
+    </script>
+</body>
+</html>

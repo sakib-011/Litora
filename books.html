@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Library · Litora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/books.css">
+</head>
+<body class="guarded">
+
+    <div id="siteNav"></div>
+
+    <main class="container section">
+        <div class="section-head">
+            <div>
+                <h1>Library</h1>
+                <p class="muted">Browse every published book in our collection.</p>
+            </div>
+            <button class="btn btn-outline" id="userRequestBtn">
+                <i class="fa-solid fa-code-pull-request icon"></i> Request a Book
+            </button>
+        </div>
+
+        <div class="glass toolbar" role="search">
+            <div class="toolbar-search">
+                <i class="fa-solid fa-magnifying-glass icon"></i>
+                <input class="input" id="searchInput" type="search" placeholder="Search title, author or category" aria-label="Search books" autocomplete="off">
+            </div>
+            <select class="input" id="categoryFilter" aria-label="Filter by category">
+                <option value="">All categories</option>
+            </select>
+            <select class="input" id="sortSelect" aria-label="Sort books">
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="title_asc">Title A–Z</option>
+                <option value="title_desc">Title Z–A</option>
+                <option value="author_asc">Author A–Z</option>
+            </select>
+        </div>
+
+        <p class="muted result-count" id="resultCount" aria-live="polite"></p>
+        <div id="bookResults"></div>
+        <nav class="pager" id="bookPager" aria-label="Pagination"></nav>
+    </main>
+
+    <!-- Request Book Modal -->
+    <dialog class="modal glass-modal" id="userRequestModal">
+        <div class="modal-box">
+            <h2>Request a Book</h2>
+            <p class="muted">Can't find a book or need a specific edition? Submit your request below.</p>
+            <form id="userRequestForm" novalidate style="display:grid; gap:1rem; margin-top:1rem;">
+                <div class="field">
+                    <label for="reqTitle">Book Title <span class="req">*</span></label>
+                    <input class="input" id="reqTitle" type="text" placeholder="e.g. Clean Code" required>
+                    <span class="field-error" id="reqTitleError"></span>
+                </div>
+                <div class="field">
+                    <label for="reqAuthor">Author (optional)</label>
+                    <input class="input" id="reqAuthor" type="text" placeholder="e.g. Robert C. Martin">
+                </div>
+                <div class="field">
+                    <label for="reqNotes">Version / Edition / Notes (optional)</label>
+                    <textarea class="input" id="reqNotes" placeholder="e.g. 2nd Edition or specific PDF version" style="min-height:80px"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button class="btn" id="reqCancelBtn" type="button">Cancel</button>
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa-solid fa-paper-plane icon"></i> Submit Request
+                    </button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/requests.js"></script>
+    <script src="js/cloudinary.js"></script>
+    <script src="js/books.js"></script>
+    <script src="js/user.js"></script>
+    <script>
+        (async () => {
+            UI.renderNavbar("books");
+            UI.initSidebar();
+            await Auth.initNav();
+
+            const user = await Auth.requireAuth();   // logged-out visitors go to login page
+            if (user) User.initBooksPage();
+        })();
+    </script>
+</body>
+</html>

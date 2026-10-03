@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Edit Book · Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="guarded">
+
+    <div id="siteNav"></div>
+
+    <div class="admin-shell">
+        <aside class="sidebar" id="adminSidebar" aria-label="Admin navigation"></aside>
+
+        <main class="admin-main">
+            <div class="page-head">
+                <div>
+                    <h1>Edit Book</h1>
+                    <p class="muted" id="editSubtitle">Loading book...</p>
+                </div>
+            </div>
+
+            <div class="skeleton" id="editLoading" style="height:420px" aria-label="Loading book"></div>
+
+            <form id="bookForm" novalidate hidden>
+                <div class="form-alert" role="alert" hidden></div>
+
+                <div class="book-form-grid">
+                    <section class="glass form-card" aria-labelledby="infoHeading">
+                        <h2 id="infoHeading">Book information</h2>
+
+                        <div class="field">
+                            <label for="bookTitle">Book title <span class="req" aria-hidden="true">*</span></label>
+                            <input class="input" id="bookTitle" type="text" maxlength="200" autocomplete="off" required>
+                            <span class="field-error" id="bookTitleError" role="alert"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="bookAuthor">Author <span class="req" aria-hidden="true">*</span></label>
+                            <input class="input" id="bookAuthor" type="text" maxlength="150" autocomplete="off" required>
+                            <span class="field-error" id="bookAuthorError" role="alert"></span>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="field">
+                                <label>Category <span class="req" aria-hidden="true">*</span></label>
+                                <div id="categoryCheckboxes" class="checkbox-grid glass" style="max-height: 150px; overflow-y: auto; padding: 0.8rem; border-radius: var(--radius-md); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.5rem;">
+                                    <span class="muted">Loading categories...</span>
+                                </div>
+                                <span class="field-error" id="bookCategoryError" role="alert"></span>
+                            </div>
+                            <div class="field">
+                                <label for="bookYear">Publication year</label>
+                                <input class="input" id="bookYear" type="number" inputmode="numeric" min="1000" max="2100">
+                                <span class="field-error" id="bookYearError" role="alert"></span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="bookDescription">Description</label>
+                            <textarea class="input" id="bookDescription" maxlength="5000"></textarea>
+                            <span class="field-error" id="bookDescriptionError" role="alert"></span>
+                        </div>
+
+                        <div class="field">
+                            <label for="bookStatus">Status</label>
+                            <select class="input" id="bookStatus">
+                                <option value="draft">Draft (hidden from users)</option>
+                                <option value="published">Published (visible to users)</option>
+                            </select>
+                            <span class="field-error" id="bookStatusError" role="alert"></span>
+                        </div>
+                    </section>
+
+                    <div class="form-side">
+                        <section class="glass form-card" aria-labelledby="coverHeading">
+                            <h2 id="coverHeading">Cover image</h2>
+                            <p class="muted replace-hint">Leave as is to keep the current cover.</p>
+                            <div id="coverPicker"></div>
+                        </section>
+
+                        <section class="glass form-card" aria-labelledby="pdfHeading">
+                            <h2 id="pdfHeading">PDF file</h2>
+                            <div class="current-file">
+                                <i class="fa-solid fa-file-pdf icon"></i>
+                                <div class="current-file-text">
+                                    <strong id="currentPdfName">PDF file</strong>
+                                    <span class="muted" id="currentPdfSize"></span>
+                                </div>
+                                <a class="btn" id="currentPdfLink" href="#"><i class="fa-solid fa-book-open icon"></i>Read</a>
+                            </div>
+                            <p class="muted replace-hint">Choose a file below only if you want to replace the PDF.</p>
+                            <div id="pdfPicker"></div>
+                        </section>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a class="btn" href="books.html">Cancel</a>
+                    <button class="btn btn-primary" id="saveBookBtn" type="submit"><i class="fa-solid fa-floppy-disk icon"></i> Save changes</button>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cloudinary.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/books.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        (async () => {
+            UI.renderNavbar("");
+            Admin.initShell("books");
+            UI.initSidebar();
+            await Auth.initNav();
+
+            const profile = await Auth.requireAdmin();
+            if (profile) await Admin.initEditBookPage();
+        })();
+    </script>
+</body>
+</html>

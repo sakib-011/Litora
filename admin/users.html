@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Users · Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/books.css">
+</head>
+<body class="guarded">
+
+    <div id="siteNav"></div>
+
+    <div class="admin-shell">
+        <aside class="sidebar" id="adminSidebar" aria-label="Admin navigation"></aside>
+
+        <main class="admin-main">
+            <div class="page-head">
+                <div>
+                    <h1>Users</h1>
+                    <p class="muted">Manage user accounts, permissions, and roles.</p>
+                </div>
+                <button class="btn btn-primary" id="addUserBtn">
+                    <i class="fa-solid fa-user-plus icon"></i> Add User
+                </button>
+            </div>
+
+            <div class="glass toolbar" role="search">
+                <div class="toolbar-search">
+                    <i class="fa-solid fa-magnifying-glass icon"></i>
+                    <input class="input" id="userSearch" type="search" placeholder="Search by name or email" aria-label="Search users" autocomplete="off">
+                </div>
+                <div class="toolbar-filter">
+                    <select class="input" id="roleFilter" aria-label="Filter by role">
+                        <option value="all">All Roles</option>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+
+            <p class="muted result-count" id="userCount" aria-live="polite"></p>
+            <div id="userResults"></div>
+        </main>
+    </div>
+
+    <!-- User Modal (Add / Edit User) -->
+    <dialog class="modal glass-modal" id="userModal">
+        <div class="modal-box">
+            <h2 id="userModalTitle">Add User</h2>
+            <form id="userModalForm" novalidate style="display:grid; gap:1rem; margin-top:1rem;">
+                <input type="hidden" id="userModalId">
+                <div class="field">
+                    <label for="userModalName">Full Name</label>
+                    <input class="input" id="userModalName" type="text" placeholder="Enter full name" required>
+                    <span class="field-error" id="userModalNameError"></span>
+                </div>
+                <div class="field">
+                    <label for="userModalEmail">Email Address</label>
+                    <input class="input" id="userModalEmail" type="email" placeholder="Enter email address" required>
+                    <span class="field-error" id="userModalEmailError"></span>
+                </div>
+                <div class="field" id="userModalPassGroup">
+                    <label for="userModalPass">Password</label>
+                    <div class="password-wrap">
+                        <input class="input" id="userModalPass" type="password" placeholder="Enter strong password (8+ chars)" autocomplete="new-password">
+                        <button type="button" class="password-toggle" data-toggle-password="userModalPass" aria-label="Show password" title="Toggle password visibility">
+                            <i class="fa-solid fa-eye icon"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength" id="userModalPassStrength" hidden>
+                        <div class="strength-bar"><div class="strength-fill" id="userModalStrengthFill"></div></div>
+                        <span class="strength-text" id="userModalStrengthText"></span>
+                    </div>
+                    <span class="field-error" id="userModalPassError"></span>
+                </div>
+                <div class="field">
+                    <label for="userModalRole">Role</label>
+                    <select class="input" id="userModalRole">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-actions" style="margin-top:0.5rem;">
+                    <button class="btn" id="userModalCancel" type="button">Cancel</button>
+                    <button class="btn btn-primary" id="userModalSave" type="submit">
+                        <i class="fa-solid fa-check icon"></i> Save User
+                    </button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        (async () => {
+            UI.renderNavbar("");
+            Admin.initShell("users");
+            UI.initSidebar();
+            await Auth.initNav();
+            UI.refreshIcons();
+
+            const profile = await Auth.requireAdmin();
+            if (profile) Admin.initUsersPage();
+        })();
+    </script>
+</body>
+</html>

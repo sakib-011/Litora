@@ -1,0 +1,25 @@
+# Dependencies & Build
+node_modules/
+dist/
+build/
+.cache/
+
+# Environment variables & local secrets
+.env
+.env.local
+.env.*.local
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Temp & Cache
+.antigravity/
+.gemini/
+*.tmp
+schema.sql
+js/config.js
+

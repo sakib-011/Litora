@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Categories · Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/books.css">
+</head>
+<body class="guarded">
+
+    <div id="siteNav"></div>
+
+    <div class="admin-shell">
+        <aside class="sidebar" id="adminSidebar" aria-label="Admin navigation"></aside>
+
+        <main class="admin-main">
+            <div class="page-head">
+                <div>
+                    <h1>Categories</h1>
+                    <p class="muted">A category can only be deleted once it has no books.</p>
+                </div>
+            </div>
+
+            <div class="cat-layout">
+                <section class="glass form-card" aria-labelledby="catFormTitle">
+                    <h2 id="catFormTitle">Add category</h2>
+                    <form id="catForm" novalidate>
+                        <div class="form-alert" role="alert" hidden></div>
+                        <div class="field">
+                            <label for="catName">Name <span class="req" aria-hidden="true">*</span></label>
+                            <input class="input" id="catName" type="text" maxlength="80" autocomplete="off" required>
+                            <span class="field-error" id="catNameError" role="alert"></span>
+                        </div>
+                        <div class="field" style="margin-top:1rem">
+                            <label for="catDescription">Description</label>
+                            <textarea class="input" id="catDescription" maxlength="500" style="min-height:90px"></textarea>
+                            <span class="field-error" id="catDescriptionError" role="alert"></span>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn" id="catCancel" type="button" hidden>Cancel</button>
+                            <button class="btn btn-primary" id="catSubmit" type="submit"><i class="fa-solid fa-plus icon"></i>Add category</button>
+                        </div>
+                    </form>
+                </section>
+
+                <div id="catList" aria-live="polite"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/categories.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        (async () => {
+            UI.renderNavbar("");
+            Admin.initShell("categories");
+            UI.initSidebar();
+            await Auth.initNav();
+            UI.refreshIcons();
+
+            const profile = await Auth.requireAdmin();
+            if (profile) Admin.initCategoriesPage();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Details · Litora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/books.css">
+</head>
+<body class="guarded">
+
+    <div id="siteNav"></div>
+
+    <main class="container section">
+        <a class="btn btn-ghost detail-back" href="books.html"><i class="fa-solid fa-arrow-left icon"></i> Back to library</a>
+
+        <div id="bookDetail" aria-live="polite">
+            <div class="detail-grid">
+                <div class="skeleton" style="aspect-ratio:2/3"></div>
+                <div style="display:grid;gap:1rem">
+                    <div class="skeleton" style="height:28px;width:120px"></div>
+                    <div class="skeleton" style="height:56px"></div>
+                    <div class="skeleton" style="height:140px"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cloudinary.js"></script>
+    <script src="js/books.js"></script>
+    <script src="js/user.js"></script>
+    <script>
+        (async () => {
+            UI.renderNavbar("books");
+            UI.initSidebar();
+            await Auth.initNav();
+
+            const user = await Auth.requireAuth();
+            if (user) await User.initBookDetailsPage();
+        })();
+    </script>
+</body>
+</html>

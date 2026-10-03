@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Requests · Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/books.css">
+</head>
+<body class="guarded">
+
+    <div id="siteNav"></div>
+
+    <div class="admin-shell">
+        <aside class="sidebar" id="adminSidebar" aria-label="Admin navigation"></aside>
+
+        <main class="admin-main">
+            <div class="page-head">
+                <div>
+                    <h1>Book Requests</h1>
+                    <p class="muted">Review requests from users for new books or specific versions.</p>
+                </div>
+            </div>
+
+            <div class="glass toolbar" role="search">
+                <div class="toolbar-filter">
+                    <select class="input" id="requestStatusFilter" aria-label="Filter by status">
+                        <option value="all">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="fulfilled">Fulfilled</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+
+            <p class="muted result-count" id="requestCount" aria-live="polite"></p>
+            <div id="requestResults"></div>
+        </main>
+    </div>
+
+    <!-- Reject Modal -->
+    <dialog class="modal glass-modal" id="rejectModal">
+        <div class="modal-box">
+            <h2>Reject Book Request</h2>
+            <p class="muted">Provide an optional reason for rejecting this book request.</p>
+            <form id="rejectModalForm" novalidate style="display:grid; gap:1rem; margin-top:1rem;">
+                <input type="hidden" id="rejectModalReqId">
+                <div class="field">
+                    <label for="rejectModalNotes">Rejection Reason / Notes</label>
+                    <textarea class="input" id="rejectModalNotes" placeholder="e.g. Out of print or copyright restricted" style="min-height:90px"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button class="btn" id="rejectModalCancel" type="button">Cancel</button>
+                    <button class="btn btn-primary" type="submit" style="background:var(--danger); border-color:var(--danger)">
+                        <i class="fa-solid fa-ban icon"></i> Reject & Notify User
+                    </button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/requests.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        (async () => {
+            UI.renderNavbar("");
+            Admin.initShell("requests");
+            UI.initSidebar();
+            await Auth.initNav();
+            UI.refreshIcons();
+
+            const profile = await Auth.requireAdmin();
+            if (profile) Admin.initRequestsPage();
+        })();
+    </script>
+</body>
+</html>

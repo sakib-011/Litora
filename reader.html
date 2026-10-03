@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>PDF Reader · Athenaeum</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reader.css">
+</head>
+<body class="reader-page guarded">
+
+    <div class="reader" id="reader">
+
+        <header class="reader-bar">
+            <a class="btn btn-ghost" id="backBtn" href="books.html" aria-label="Back">
+                <i class="fa-solid fa-arrow-left icon"></i><span class="btn-text">Back</span>
+            </a>
+            <div class="reader-title">
+                <h1 id="readerTitle">Loading...</h1>
+                <span class="muted" id="readerAuthor"></span>
+            </div>
+            <button class="btn btn-icon" id="fsBtn" type="button" aria-label="Enter fullscreen">
+                <i class="fa-solid fa-expand icon"></i>
+            </button>
+        </header>
+
+        <main class="reader-stage" id="stage" tabindex="0" aria-label="PDF document. Scroll to read, or use the page controls.">
+            <div class="canvas-wrap" id="canvasWrap"></div>
+            <div class="reader-overlay" id="overlay" role="status" aria-live="polite"></div>
+        </main>
+
+        <footer class="reader-toolbar" aria-label="Reader controls">
+            <div class="tool-group" role="group" aria-label="Pages">
+                <button class="btn" id="prevBtn" type="button" aria-label="Previous page" disabled><i class="fa-solid fa-chevron-left icon"></i></button>
+                <label class="page-field">
+                    <span class="sr-only">Page number</span>
+                    <input class="input page-input" id="pageInput" type="number" min="1" value="1" inputmode="numeric" disabled>
+                    <span>/ <span id="pageTotal">–</span></span>
+                </label>
+                <button class="btn" id="nextBtn" type="button" aria-label="Next page" disabled><i class="fa-solid fa-chevron-right icon"></i></button>
+            </div>
+
+            <div class="tool-group" role="group" aria-label="Zoom">
+                <button class="btn" id="zoomOutBtn" type="button" aria-label="Zoom out" disabled><i class="fa-solid fa-magnifying-glass-minus icon"></i></button>
+                <span class="zoom-label" id="zoomLabel" aria-live="polite">100%</span>
+                <button class="btn" id="zoomInBtn" type="button" aria-label="Zoom in" disabled><i class="fa-solid fa-magnifying-glass-plus icon"></i></button>
+                <button class="btn" id="fitBtn" type="button" aria-label="Fit width" aria-pressed="true" title="Fit width" disabled><i class="fa-solid fa-arrows-left-right icon"></i></button>
+            </div>
+
+            <div class="tool-group">
+                <button class="btn" id="downloadBtn" type="button" aria-label="Download PDF" title="Download"><i class="fa-solid fa-download icon"></i></button>
+            </div>
+        </footer>
+
+        <span class="sr-only" id="srStatus" aria-live="polite"></span>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cloudinary.js"></script>
+    <script src="js/books.js"></script>
+    <script src="js/pdf-reader.js"></script>
+    <script>
+        PdfReader.initPage();
+    </script>
+</body>
+</html>

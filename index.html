@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Litora — Online Library</title>
+    <meta name="description" content="Explore, search and read books from the Litora digital library.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body data-page="home">
+
+    <!-- Navbar rendered dynamically -->
+    <div id="siteNav"></div>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <!-- Hero Content -->
+                <div class="hero-content">
+                    <span class="hero-label">
+                        <i class="fa-solid fa-book-sparkles icon"></i> YOUR DIGITAL LIBRARY
+                    </span>
+
+                    <h1>
+                        Every book you need,
+                        <span>one search away.</span>
+                    </h1>
+
+                    <p class="lead">
+                        Discover books, explore new topics, and read your favorite titles from anywhere.
+                    </p>
+
+                    <!-- Search -->
+                    <form class="search-bar" id="heroSearch" role="search">
+                        <i class="fa-solid fa-magnifying-glass search-icon icon"></i>
+                        <label for="heroQuery" class="sr-only">Search books</label>
+                        <input id="heroQuery" name="q" type="search" placeholder="Search by title, author or category" autocomplete="off">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </form>
+
+                    <ul class="hero-features">
+                        <li><i class="fa-solid fa-circle-check icon"></i> Instant PDF Reading</li>
+                        <li><i class="fa-solid fa-circle-check icon"></i> Free Access</li>
+                        <li><i class="fa-solid fa-circle-check icon"></i> Curated Library</li>
+                    </ul>
+
+                    <div class="hero-links">
+                        <a href="books.html">Explore all books <i class="fa-solid fa-arrow-right icon"></i></a>
+                    </div>
+                </div>
+
+                <!-- Hero Visual -->
+                <div class="hero-visual">
+                    <div class="book-stack">
+                        <div class="book book-1"><span>Computer<br>Networks</span></div>
+                        <div class="book book-2"><span>Algorithms</span></div>
+                        <div class="book book-3"><span>Database<br>Systems</span></div>
+                        <div class="book book-4"><span>Software<br>Engineering</span></div>
+                        <div class="book book-5"><span>Artificial<br>Intelligence</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOOKS SECTION -->
+        <section class="section books-section" id="books">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <span class="section-label">LIBRARY COLLECTION</span>
+                        <h2>Explore Books</h2>
+                        <p class="muted">Discover books available in our digital library.</p>
+                    </div>
+                    <a href="books.html" class="btn btn-outline">
+                        View all books <i class="fa-solid fa-arrow-right icon"></i>
+                    </a>
+                </div>
+
+                <div class="book-grid" id="booksGrid">
+                    <!-- Loading -->
+                    <div class="books-loading" id="booksLoading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading books...</p>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div class="books-empty" id="booksEmpty" hidden>
+                    <div class="empty-icon"><i class="fa-solid fa-book-open icon"></i></div>
+                    <h3>No books available yet</h3>
+                    <p class="muted">Books will appear here once they are added to the library.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORIES SECTION -->
+        <section class="section categories-section" id="categories">
+            <div class="container">
+                <div class="section-head centered">
+                    <div>
+                        <span class="section-label">EXPLORE</span>
+                        <h2>Browse by Category</h2>
+                        <p class="muted">Find books based on your interests.</p>
+                    </div>
+                </div>
+
+                <div class="category-grid" id="categoriesGrid">
+                    <a href="books.html?q=Computer%20Science" class="category-card">
+                        <div class="category-icon"><i class="fa-solid fa-laptop-code icon"></i></div>
+                        <span>Computer Science</span>
+                    </a>
+                    <a href="books.html?q=Networking" class="category-card">
+                        <div class="category-icon"><i class="fa-solid fa-network-wired icon"></i></div>
+                        <span>Networking</span>
+                    </a>
+                    <a href="books.html?q=Programming" class="category-card">
+                        <div class="category-icon"><i class="fa-solid fa-code icon"></i></div>
+                        <span>Programming</span>
+                    </a>
+                    <a href="books.html?q=Artificial%20Intelligence" class="category-card">
+                        <div class="category-icon"><i class="fa-solid fa-brain icon"></i></div>
+                        <span>Artificial Intelligence</span>
+                    </a>
+                    <a href="books.html?q=Database" class="category-card">
+                        <div class="category-icon"><i class="fa-solid fa-database icon"></i></div>
+                        <span>Database</span>
+                    </a>
+                    <a href="books.html?q=Software%20Engineering" class="category-card">
+                        <div class="category-icon"><i class="fa-solid fa-gears icon"></i></div>
+                        <span>Software Engineering</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA SECTION -->
+        <section class="section cta-section">
+            <div class="container">
+                <div class="cta">
+                    <div>
+                        <span class="section-label">LITORA</span>
+                        <h2>Start exploring your next book.</h2>
+                        <p>Browse the library and discover something worth reading today.</p>
+                    </div>
+                    <a href="books.html" class="btn btn-primary">
+                        Explore Books <i class="fa-solid fa-arrow-right icon"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <a href="index.html" class="brand">
+                    <span class="brand-mark"><i class="fa-solid fa-book-bookmark icon"></i></span>
+                    <span>Litora</span>
+                </a>
+                <p>Your digital library for discovering and reading books online.</p>
+            </div>
+
+            <div class="footer-links">
+                <div>
+                    <h4>Library</h4>
+                    <a href="index.html">Home</a>
+                    <a href="books.html">Books</a>
+                    <a href="#categories">Categories</a>
+                </div>
+                <div>
+                    <h4>Account</h4>
+                    <a href="login.html">Log in</a>
+                    <a href="register.html">Sign up</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container footer-bottom">
+            <p>© 2026 Litora Online Library. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cloudinary.js"></script>
+    <script src="js/books.js"></script>
+    <script src="js/app.js"></script>
+
+    <script>
+        (async () => {
+            UI.renderNavbar("home");
+            UI.initSidebar();
+            await Auth.initNav();
+            loadHomepageBooks();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard · Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/books.css">
+</head>
+<body class="guarded">
+
+    <div id="siteNav"></div>
+
+    <div class="admin-shell">
+        <aside class="sidebar" id="adminSidebar" aria-label="Admin navigation"></aside>
+
+        <main class="admin-main">
+            <div class="page-head">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p class="muted">An overview of your library.</p>
+                </div>
+                <a class="btn btn-primary" href="add-book.html"><i class="fa-solid fa-plus icon"></i> Add book</a>
+            </div>
+
+            <div class="stat-grid" aria-label="Library statistics">
+                <div class="stat glass"><i class="fa-solid fa-book icon"></i><strong id="statTotal">—</strong><span class="muted">Total books</span></div>
+                <div class="stat glass"><i class="fa-solid fa-circle-check icon"></i><strong id="statPublished">—</strong><span class="muted">Published</span></div>
+                <div class="stat glass"><i class="fa-solid fa-file-lines icon"></i><strong id="statDraft">—</strong><span class="muted">Drafts</span></div>
+                <div class="stat glass"><i class="fa-solid fa-tags icon"></i><strong id="statCategories">—</strong><span class="muted">Categories</span></div>
+                <div class="stat glass"><i class="fa-solid fa-users icon"></i><strong id="statUsers">—</strong><span class="muted">Users</span></div>
+            </div>
+
+            <section class="dash-block" aria-labelledby="addedHeading">
+                <h2 id="addedHeading">Recently added</h2>
+                <div id="recentAdded"><div class="skeleton" style="height:260px"></div></div>
+            </section>
+
+            <section class="dash-block" aria-labelledby="updatedHeading">
+                <h2 id="updatedHeading">Recently updated</h2>
+                <div id="recentUpdated"><div class="skeleton" style="height:260px"></div></div>
+            </section>
+
+            <section class="dash-block" aria-labelledby="usersHeading">
+                <h2 id="usersHeading">Latest users</h2>
+                <div id="latestUsers"><div class="skeleton" style="height:160px"></div></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cloudinary.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/books.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        (async () => {
+            UI.renderNavbar("");
+            Admin.initShell("dashboard");
+            UI.initSidebar();
+            await Auth.initNav();
+
+            const profile = await Auth.requireAdmin();
+            if (profile) Admin.initDashboard();
+        })();
+    </script>
+</body>
+</html>

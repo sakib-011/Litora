@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Profile · Litora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body data-page="profile" data-nav="profile" class="guarded">
+    <div id="siteNav"></div>
+
+    <main class="container section">
+        <section class="glass profile-card">
+            <div class="profile-head">
+                <div class="avatar" id="profileAvatar" aria-hidden="true"></div>
+                <div>
+                    <h1 id="profileName">Loading...</h1>
+                    <p class="muted" id="profileEmail"></p>
+                    <span class="role-badge" id="profileRole"></span>
+                </div>
+            </div>
+            <form id="profileForm" class="auth-form" novalidate>
+                <div class="field">
+                    <label for="profileFullName">Full name</label>
+                    <input id="profileFullName" class="input" type="text" autocomplete="name" placeholder="Enter your full name">
+                    <span class="field-error" id="profileFullNameError" role="alert"></span>
+                </div>
+                <p class="muted" id="profileJoined"></p>
+                <div class="profile-actions">
+                    <button class="btn btn-primary" id="profileSaveBtn" type="submit">
+                        <i class="fa-solid fa-floppy-disk icon"></i> Save changes
+                    </button>
+                    <button class="btn" type="button" data-logout>
+                        <i class="fa-solid fa-right-from-bracket icon"></i> Log out
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- My Book Requests -->
+        <section class="glass profile-card" style="margin-top:1.5rem">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; border-bottom:1px solid var(--border); padding-bottom:1rem;">
+                <div>
+                    <h2 style="font-size:1.3rem; margin:0; font-family:var(--font-display)">My Book Requests</h2>
+                    <p class="muted" style="font-size:0.85rem; margin:0">Track status of books you have requested</p>
+                </div>
+                <button class="btn btn-outline" id="userRequestBtn">
+                    <i class="fa-solid fa-code-pull-request icon"></i> Request a Book
+                </button>
+            </div>
+            <div id="myRequestsList" style="margin-top:1rem"></div>
+        </section>
+    </main>
+
+    <!-- Request Book Modal -->
+    <dialog class="modal glass-modal" id="userRequestModal">
+        <div class="modal-box">
+            <h2>Request a Book</h2>
+            <p class="muted">Can't find a book or need a specific edition? Submit your request below.</p>
+            <form id="userRequestForm" novalidate style="display:grid; gap:1rem; margin-top:1rem;">
+                <div class="field">
+                    <label for="reqTitle">Book Title <span class="req">*</span></label>
+                    <input class="input" id="reqTitle" type="text" placeholder="e.g. Clean Code" required>
+                    <span class="field-error" id="reqTitleError"></span>
+                </div>
+                <div class="field">
+                    <label for="reqAuthor">Author (optional)</label>
+                    <input class="input" id="reqAuthor" type="text" placeholder="e.g. Robert C. Martin">
+                </div>
+                <div class="field">
+                    <label for="reqNotes">Version / Edition / Notes (optional)</label>
+                    <textarea class="input" id="reqNotes" placeholder="e.g. 2nd Edition or specific PDF version" style="min-height:80px"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button class="btn" id="reqCancelBtn" type="button">Cancel</button>
+                    <button class="btn btn-primary" type="submit">
+                        <i class="fa-solid fa-paper-plane icon"></i> Submit Request
+                    </button>
+                </div>
+            </form>
+        </div>
+    </dialog>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/requests.js"></script>
+    <script src="js/cloudinary.js"></script>
+    <script src="js/books.js"></script>
+    <script src="js/user.js"></script>
+
+    <script>
+    (async () => {
+        try {
+            UI.renderNavbar("profile");
+            UI.initSidebar();
+            await Auth.initNav();
+
+            const user = await Auth.requireAuth();
+            if (!user) return;
+
+            await User.initProfilePage();
+        } catch (error) {
+            console.error("[profile.html] Profile initialization failed:", error);
+        }
+    })();
+    </script>
+</body>
+</html>
