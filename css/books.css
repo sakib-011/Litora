@@ -67,11 +67,10 @@ select.input option { background: var(--bg-elevated); color: var(--text-primary)
 @media (max-width: 760px) {
     .book-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
     .book-table, .book-table tbody { display: block; }
-    .book-table tr { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1rem; padding: 1rem; border-bottom: 1px solid var(--border); }
+    .book-table tr { display: grid; grid-template-columns: 1fr; gap: 0.75rem; padding: 1rem; border-bottom: 1px solid var(--border); }
     .book-table tbody tr:last-child { border-bottom: 0; }
     .book-table td { display: block; padding: 0; border: 0; }
-    .book-table td::before { content: attr(data-label); display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); }
-    .book-table td[data-label="Cover"], .book-table td[data-label="Title"], .book-table td[data-label="Actions"] { grid-column: 1 / -1; }
+    .book-table td::before { content: attr(data-label); display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); margin-bottom: 0.2rem; }
     .book-table td[data-label="Cover"]::before, .book-table td[data-label="Actions"]::before { display: none; }
     .toolbar select.input { flex: 1 1 140px; }
 }
